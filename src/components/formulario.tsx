@@ -1,12 +1,22 @@
 import React, { useState } from "react";
 import { GomService } from "../services/gomService";
+import {
+  TextField,
+  Button,
+  FormControl,
+  FormLabel,
+  Stack,
+  Box,
+  Input,
+} from '@mui/material';
+import FileUploadIcon from '@mui/icons-material/FileUpload';
+import AddIcon from '@mui/icons-material/Add';
 
 export default function GomForm(){
   const [file, setFile] = useState<File | null>(null);
   const [kInicial, setKInicial] = useState<number>(0);
   const [kFinal, setKFinal] = useState<number>(0);
   const [caseId, setCaseId] = useState<string>("");
-  //const [internalVars, setInternalVars] = useState<string>("");
   const [internalVars, setInternalVars] = useState<string[]>([""]);
 
   const handleChangeVar = (index: number, value: string) => {
@@ -15,7 +25,7 @@ export default function GomForm(){
     setInternalVars(newVars);
   };
 
-   const addField = () => {
+  const addField = () => {
     setInternalVars([...internalVars, ""]);
   };
 
@@ -29,14 +39,13 @@ export default function GomForm(){
 
     const filteredVars = internalVars.filter(v => v.trim() !== "");
     
-
     try {
+      // Supondo que GomService.enviandoParaConfigurar aceita os tipos definidos
       await GomService.enviandoParaConfigurar({
         file,
         k_initial: kInicial,
         k_final: kFinal,
         case_id: caseId,
-        //internal_vars: internalVars,
         internal_vars: filteredVars,
       });
       alert("Dados enviados com sucesso!");
@@ -47,79 +56,113 @@ export default function GomForm(){
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "10px", maxWidth: "400px" }}>
-      <label>
-        Arquivo (CSV/TXT):
-        <input
-          type="file"
-          onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)}
-          required
-        />
-      </label>
-
-      <label>
-        k_inicial:
-        <input
-          type="number"
-          value={kInicial}
-          onChange={(e) => setKInicial(Number(e.target.value))}
-          required
-        />
-      </label>
-
-      <label>
-        k_final:
-        <input
-          type="number"
-          value={kFinal}
-          onChange={(e) => setKFinal(Number(e.target.value))}
-          required
-        />
-      </label>
-
-      <label>
-        case_id:
-        <input
-          type="text"
-          value={caseId}
-          onChange={(e) => setCaseId(e.target.value)}
-          required
-        />
-      </label>
-
-      <label>internal_vars: </label>
-      {internalVars.map((val, index) => (
-        <div key={index} style={{display: "flex", marginBottom: "8px"}}>
-          <input
-            type="text"
-            value={val}
-            onChange={(e) => handleChangeVar(index, e.target.value)}
-            style={{ flex: 1}}
-          />
-          {index === internalVars.length - 1 &&(
-            <button
-              type="button"
-              onClick={addField}
-              style={{marginLeft: "8px"}}
+    <Box
+      sx={{
+        maxWidth: '400px',
+        p: 3,
+        border: '1px solid #ccc',
+        borderRadius: 2,
+        boxShadow: 3,
+      }}
+    >
+      <form onSubmit={handleSubmit}>
+        <Stack spacing={3}>
+          {/* Campo Arquivo (CSV/TXT) */}
+          <FormControl fullWidth>
+            <FormLabel htmlFor="file-upload">
+              Arquivo (CSV/TXT): {file ? file.name : 'Nenhum arquivo selecionado'}
+            </FormLabel>
+            <Button
+              variant="outlined"
+              component="label"
+              startIcon={<FileUploadIcon />}
             >
-              +
-            </button>
-          )}
+              Selecionar Arquivo
+              <Input
+                type="file"
+                id="file-upload"
+                inputProps={{ accept: '.csv,.txt' }}
+                // CORREÇÃO DE TIPAGEM: Adicionamos (e: React.ChangeEvent<HTMLInputElement>)
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setFile(e.target.files ? e.target.files[0] : null)
+                }}
+                required
+                sx={{ display: 'none' }} // Esconde o input de arquivo nativo
+              />
+            </Button>
+          </FormControl>
 
-        </div>
-      ))}
+          {/* Campo k_inicial */}
+          <TextField
+            label="k_inicial"
+            type="number"
+            value={kInicial}
+            onChange={(e) => setKInicial(Number(e.target.value))}
+            required
+            fullWidth
+            variant="outlined"
+          />
 
-      {/* <label>
-        internal_vars (separadas por vírgula):
-        <input
-          type="text"
-          value={internalVars}
-          onChange={(e) => setInternalVars(e.target.value)}
-        />
-      </label> */}
+          {/* Campo k_final */}
+          <TextField
+            label="k_final"
+            type="number"
+            value={kFinal}
+            onChange={(e) => setKFinal(Number(e.target.value))}
+            required
+            fullWidth
+            variant="outlined"
+          />
 
-      <button type="submit">Enviar</button>
-    </form>
+          {/* Campo case_id */}
+          <TextField
+            label="case_id"
+            type="text"
+            value={caseId}
+            onChange={(e) => setCaseId(e.target.value)}
+            required
+            fullWidth
+            variant="outlined"
+          />
+
+          {/* Campos internal_vars */}
+          <FormControl fullWidth>
+            <FormLabel sx={{ mb: 1 }}>internal_vars:</FormLabel>
+            <Stack spacing={1}>
+              {internalVars.map((val, index) => (
+                <Box key={index} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <TextField
+                    type="text"
+                    value={val}
+                    onChange={(e) => handleChangeVar(index, e.target.value)}
+                    fullWidth
+                    size="small"
+                  />
+                  {/* Botão de Adicionar, aparece apenas no último campo */}
+                  {index === internalVars.length - 1 && (
+                    <Button
+                      type="button"
+                      onClick={addField}
+                      variant="contained"
+                      size="small"
+                      startIcon={<AddIcon />}
+                      sx={{ minWidth: 'auto', p: 1 }}
+                    >
+                      Adicionar
+                    </Button>
+                  )}
+                </Box>
+              ))}
+            </Stack>
+          </FormControl>
+
+          {/* Botão Enviar */}
+          <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 2 }}>
+            Enviar
+          </Button>
+        </Stack>
+      </form>
+    </Box>
+    
   );
 };
-
