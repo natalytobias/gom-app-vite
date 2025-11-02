@@ -21,25 +21,33 @@ export class GomService {
         dados.internal_vars.forEach(v => formData.append("internal_vars", v));
       }
 
-      // debug: mostra o que está indo
-      for (const [key, value] of formData.entries()) {
-        console.log("Enviando:", key, value);
-      }
-
-      const res = await api.post("http://127.0.0.1:8000/upload-data/", formData, {
+      api.post("http://127.0.0.1:8000/upload-data/", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-
-      const conversao = await api.get("http://127.0.0.1:8000/conversao-txt");
-
+      
     } catch (err: any) {
       console.error("Erro ao enviar:", err.response?.data || err.message);
       throw err;
     }
+  }
 
-    
+  static async convertendoTxt(k_final: number, internal_vars: string[]): Promise<any>{
+    try {
+      const conversao = await api.get("http://127.0.0.1:8000/conversao-txt", {
+        params: {
+          num_k: k_final,
+          internal_vars_string: internal_vars.join(',')
+        }
+      });
+
+      return conversao.data;
+      
+    } catch (err: any) {
+      console.error("Erro ao enviar:", err.response?.data || err.message);
+      throw err;
+    }
   }
 
   static async  DadosHeatmap() {

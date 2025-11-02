@@ -8,6 +8,9 @@ import {
   Stack,
   Box,
   Input,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
 } from '@mui/material';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import AddIcon from '@mui/icons-material/Add';
@@ -15,7 +18,6 @@ import Menu from './menu';
 
 export default function GomForm(){
   const [file, setFile] = useState<File | null>(null);
-  const [kInicial, setKInicial] = useState<number>(0);
   const [kFinal, setKFinal] = useState<number>(0);
   const [caseId, setCaseId] = useState<string>("");
   const [internalVars, setInternalVars] = useState<string[]>([""]);
@@ -41,15 +43,19 @@ export default function GomForm(){
     const filteredVars = internalVars.filter(v => v.trim() !== "");
     
     try {
-      // Supondo que GomService.enviandoParaConfigurar aceita os tipos definidos
       await GomService.enviandoParaConfigurar({
         file,
-        k_initial: kInicial,
+        k_initial: 2,
         k_final: kFinal,
         case_id: caseId,
         internal_vars: filteredVars,
       });
+      await GomService.convertendoTxt(
+        kFinal,filteredVars,
+      );
+
       alert("Dados enviados com sucesso!");
+
     } catch (err) {
       console.error("Erro ao enviar:", err);
       alert("Erro ao enviar dados!");
@@ -73,7 +79,8 @@ export default function GomForm(){
           {/* Campo Arquivo (CSV/TXT) */}
           <FormControl fullWidth>
             <FormLabel htmlFor="file-upload">
-              Arquivo (CSV/TXT): {file ? file.name : 'Nenhum arquivo selecionado'}
+              Arquivo (.CSV): 
+                {file ? file.name : 'Nenhum arquivo selecionado'}
             </FormLabel>
             <Button
               variant="outlined"
@@ -95,31 +102,24 @@ export default function GomForm(){
             </Button>
           </FormControl>
 
-          {/* Campo k_inicial */}
-          <TextField
-            label="k_inicial"
-            type="number"
-            value={kInicial}
-            onChange={(e) => setKInicial(Number(e.target.value))}
-            required
-            fullWidth
-            variant="outlined"
-          />
 
-          {/* Campo k_final */}
-          <TextField
-            label="k_final"
-            type="number"
-            value={kFinal}
-            onChange={(e) => setKFinal(Number(e.target.value))}
-            required
-            fullWidth
-            variant="outlined"
-          />
+           <FormLabel id="demo-row-radio-buttons-group-label">Escolha a quantidade de perfis extremos (k final)</FormLabel>
+              <RadioGroup
+                row
+                aria-labelledby="demo-row-radio-buttons-group-label"
+                name="row-radio-buttons-group"
+                value={kFinal} 
+                onChange={(e) => setKFinal(Number(e.target.value))} 
+              >
+                <FormControlLabel value="2" control={<Radio />} label="2" />
+                <FormControlLabel value="3" control={<Radio />} label="3" />
+                <FormControlLabel value="4" control={<Radio />} label="4" />
+              </RadioGroup>
+
 
           {/* Campo case_id */}
           <TextField
-            label="case_id"
+            label="Coluna ID"
             type="text"
             value={caseId}
             onChange={(e) => setCaseId(e.target.value)}
@@ -130,7 +130,7 @@ export default function GomForm(){
 
           {/* Campos internal_vars */}
           <FormControl fullWidth>
-            <FormLabel sx={{ mb: 1 }}>internal_vars:</FormLabel>
+            <FormLabel sx={{ mb: 1 }}>Variáveis internas</FormLabel>
             <Stack spacing={1}>
               {internalVars.map((val, index) => (
                 <Box key={index} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -141,7 +141,6 @@ export default function GomForm(){
                     fullWidth
                     size="small"
                   />
-                  {/* Botão de Adicionar, aparece apenas no último campo */}
                   {index === internalVars.length - 1 && (
                     <Button
                       type="button"
