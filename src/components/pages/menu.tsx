@@ -43,7 +43,7 @@ const Menu: React.FC = () => {
                   to="/ListaCarros"
                   sx={{ fontFamily: "inherit" }}
                 >
-                  Documentação
+                  Guia de padronização
                 </Button>
         </Box>
       </Toolbar>

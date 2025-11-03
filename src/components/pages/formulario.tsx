@@ -43,16 +43,19 @@ export default function GomForm(){
     const filteredVars = internalVars.filter(v => v.trim() !== "");
     
     try {
-      await GomService.enviandoParaConfigurar({
+      const resp = await GomService.enviandoParaConfigurar({
         file,
         k_initial: 2,
         k_final: kFinal,
         case_id: caseId,
         internal_vars: filteredVars,
       });
+      
       await GomService.convertendoTxt(
         kFinal,filteredVars,
       );
+      
+      
 
       alert("Dados enviados com sucesso!");
 

@@ -9,7 +9,7 @@ interface parametrosGom {
 }
 
 export class GomService {
-  static async enviandoParaConfigurar(dados: parametrosGom): Promise<void> {
+  static async enviandoParaConfigurar(dados: parametrosGom): Promise<any> {
     try {
       const formData = new FormData();
       formData.append("file", dados.file);
