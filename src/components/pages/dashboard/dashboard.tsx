@@ -1,12 +1,17 @@
 import React from 'react';
 import HeatmapChart from './heatmapChart';
+import SunburstChart from './Sunburst';
+import Menu from '../menu';
+
 
 const Dashboard: React.FC = () => {
   
   return (
+    <>
+    <Menu/>
     <div style={{ 
         padding: '20px', 
-        backgroundColor: '#f4f7f9', // Cor de fundo suave para o dashboard
+        backgroundColor: '#f4f7f9', 
         minHeight: '100vh',
         fontFamily: 'Arial, sans-serif' 
     }}>
@@ -26,7 +31,7 @@ const Dashboard: React.FC = () => {
           backgroundColor: '#fff', 
           padding: '20px', 
           borderRadius: '8px', 
-          boxShadow: '0 4px 12px rgba(0,0,0,0.05)' // Sombra suave para destacar o card
+          boxShadow: '0 4px 12px rgba(0,0,0,0.05)'
       }}>
         <h2 style={{ color: '#333', borderLeft: '4px solid #00aaff', paddingLeft: '10px', marginBottom: '20px' }}>
           Análise de Densidade (Heatmap)
@@ -35,7 +40,7 @@ const Dashboard: React.FC = () => {
     
         <HeatmapChart />
       
-      </section>
+      </section> 
 
       
       <section style={{ 
@@ -48,10 +53,12 @@ const Dashboard: React.FC = () => {
             backgroundColor: '#fff', 
             padding: '20px', 
             borderRadius: '8px', 
-            boxShadow: '0 4px 12px rgba(0,0,0,0.05)' 
+            boxShadow: '0 4px 12px rgba(0,0,0,0.05)', 
+            width: '100%',
+            height: '500px'
         }}>
-          <h2 style={{ color: '#333' }}>Gráfico de Barras (Futuro)</h2>
-          <p style={{ color: '#666' }}>Implemente um componente BarChart.tsx aqui.</p>
+          <h2>Mapa Sunburst dos Perfis GOM</h2>
+            <SunburstChart num_k={4} />
           
         </div>
 
@@ -68,6 +75,8 @@ const Dashboard: React.FC = () => {
       </section>
       
     </div>
+    </>
+    
   );
 };
 

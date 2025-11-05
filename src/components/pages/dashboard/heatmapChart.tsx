@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import type { EChartsOption } from 'echarts';
-import { GomService } from '../../../services/gomService'; 
 import ReactECharts from './reactECharts';
+import { DashboardService } from '../../../services/DashboardService';
 
-// Tipagem da Resposta da API
+
 interface HeatmapApiResponse {
     xAxisLabels: string[];
     yAxisLabels: string[];
-    data: [number, number, number][]; // [indice_x, indice_y, valor]
+    data: [number, number, number][]; 
     valueKey: string;
 }
 
@@ -19,7 +19,8 @@ const HeatmapChart: React.FC = () => {
     useEffect(() => {
         const loadData = async () => {
             try {
-                const response = await GomService.DadosHeatmap();
+                //const response = await GomService.DadosHeatmap();
+                const response = await DashboardService.DadosHeatmap();
                 
                 setApiData(response.data as HeatmapApiResponse); 
                 setIsLoading(false);
