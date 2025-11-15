@@ -15,7 +15,7 @@ export default function Sobre() {
           scrambled it to make a type specimen book. It has survive
         </div>
 
-        <div className="h-[0.5px] bg-gray-200 w-full my-4" />
+        <div className="h-[0.5px] bg-gray-400 w-full my-10" />
 
         <div className="text-start font-medium text-2xl pb-2">Repositório</div>
         <div className="text-start ">
