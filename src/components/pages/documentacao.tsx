@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import Menu from "./menu";
+import Separator from "../separator";
 
 export default function Documentacao() {
   return (
@@ -84,7 +85,7 @@ export default function Documentacao() {
           </div>
         </Box>
 
-        <div className="h-[0.5px] bg-gray-400 w-full my-10" />
+        <Separator />
 
         <Box sx={{ flex: 1, textAlign: "justify" }}>
           {" "}

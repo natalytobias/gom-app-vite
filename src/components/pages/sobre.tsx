@@ -1,6 +1,7 @@
 import { Button } from "@mui/material";
 import Menu from "./menu";
 import { Github } from "lucide-react";
+import Separator from "../separator";
 
 export default function Sobre() {
   return (
@@ -15,7 +16,7 @@ export default function Sobre() {
           scrambled it to make a type specimen book. It has survive
         </div>
 
-        <div className="h-[0.5px] bg-gray-400 w-full my-10" />
+        <Separator />
 
         <div className="text-start font-medium text-2xl pb-2">Repositório</div>
         <div className="text-start ">
