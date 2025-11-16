@@ -27,4 +27,19 @@ export class DashboardService{
       throw err;
     }
   }
+
+
+  static async DadosLMFR() {
+    try {
+      const response = await api.get(`http://127.0.0.1:8000/tabela-resultados`);
+            return response.data;
+    }
+    catch(err: any){
+      console.error("Erro ao carregar dados", err.response?.data || err.message);
+        throw err;
+    }
+  }
+
+
+
 }

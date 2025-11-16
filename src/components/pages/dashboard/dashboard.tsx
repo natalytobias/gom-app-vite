@@ -1,7 +1,6 @@
 import React from "react";
-import HeatmapChart from "./heatmapChart";
 import SunburstChart from "./Sunburst";
-import Menu from "../menu";
+import TabelaResultados from '../../tableLmfr';
 
 interface DashboardProps {
   perfil_k: number;
@@ -54,6 +53,15 @@ export const Dashboard: React.FC<DashboardProps> = ({ perfil_k }) => {
             <h2>Mapa Sunburst dos Perfis GOM</h2>
             <SunburstChart num_k={perfil_k} />
           </div>
+        </section>
+
+        <section
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+              gap: "20px",
+            }}
+          >
 
           <div
             style={{
@@ -68,8 +76,11 @@ export const Dashboard: React.FC<DashboardProps> = ({ perfil_k }) => {
               Pode ser usado para métricas de resumo, como média e desvio
               padrão.
             </p>
+            <TabelaResultados/>
           </div>
         </section>
+
+
       </div>
     </>
   );
