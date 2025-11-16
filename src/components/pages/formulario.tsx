@@ -7,7 +7,6 @@ import {
   FormLabel,
   Stack,
   Box,
-  Input,
   RadioGroup,
   FormControlLabel,
   Radio,
@@ -15,16 +14,15 @@ import {
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import AddIcon from "@mui/icons-material/Add";
 import Menu from "./menu";
-
 import Dashboard from "./dashboard/dashboard";
 
 export default function GomForm() {
   const [file, setFile] = useState<File | null>(null);
-  const [kFinal, setKFinal] = useState<number>(0);
+  const [kFinal, setKFinal] = useState<number>(2); // Valor padrão 2
   const [caseId, setCaseId] = useState<string>("");
   const [internalVars, setInternalVars] = useState<string[]>([""]);
-
   const [showDashboard, setShowDashboard] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChangeVar = (index: number, value: string) => {
     const newVars = [...internalVars];
@@ -36,18 +34,42 @@ export default function GomForm() {
     setInternalVars([...internalVars, ""]);
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setFile(e.target.files[0]);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (isSubmitting) return; // Previne múltiplos envios
+    
+    console.log("Formulário submetido"); // Debug
 
     if (!file) {
       alert("Selecione um arquivo!");
       return;
     }
 
+    if (kFinal === 0) {
+      alert("Selecione a quantidade de perfis extremos!");
+      return;
+    }
+
     const filteredVars = internalVars.filter((v) => v.trim() !== "");
 
     try {
-      const resp = await GomService.enviandoParaConfigurar({
+      setIsSubmitting(true);
+      console.log("Enviando dados...", { // Debug
+        file: file.name,
+        kFinal,
+        caseId,
+        filteredVars
+      });
+
+      // Chama o serviço
+      await GomService.enviandoParaConfigurar({
         file,
         k_initial: 2,
         k_final: kFinal,
@@ -55,13 +77,18 @@ export default function GomForm() {
         internal_vars: filteredVars,
       });
 
-      await GomService.convertendoTxt(kFinal, filteredVars);
+      
+
+      // Converte o arquivo
+      //await GomService.convertendoTxt(kFinal, filteredVars);
 
       alert("Dados enviados com sucesso!");
       setShowDashboard(true);
     } catch (err) {
-      console.error("Erro ao enviar:", err);
-      alert("Erro ao enviar dados!");
+      console.error("Erro detalhado ao enviar:", err);
+      alert(`Erro ao enviar dados: ${err instanceof Error ? err.message : 'Erro desconhecido'}`);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -81,45 +108,46 @@ export default function GomForm() {
         >
           <form onSubmit={handleSubmit}>
             <Stack spacing={3}>
-              {/* Campo Arquivo (CSV/TXT) */}
+              {/* Campo Arquivo (CSV/TXT) - CORRIGIDO */}
               <FormControl fullWidth>
-                <FormLabel htmlFor="file-upload">
+                <FormLabel htmlFor="file-upload" sx={{ mb: 1 }}>
                   Arquivo (.CSV):
-                  {file ? file.name : "Nenhum arquivo selecionado"}
                 </FormLabel>
-                <Button
-                  variant="outlined"
-                  component="label"
-                  startIcon={<FileUploadIcon />}
-                >
-                  Selecionar Arquivo
-                  <Input
-                    type="file"
-                    id="file-upload"
-                    inputProps={{ accept: ".csv,.txt" }}
-                    // CORREÇÃO DE TIPAGEM: Adicionamos (e: React.ChangeEvent<HTMLInputElement>)
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      setFile(e.target.files ? e.target.files[0] : null);
-                    }}
-                    required
-                    sx={{ display: "none" }} // Esconde o input de arquivo nativo
-                  />
-                </Button>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                  <Button
+                    variant="outlined"
+                    component="label"
+                    startIcon={<FileUploadIcon />}
+                  >
+                    Selecionar Arquivo
+                    <input
+                      type="file"
+                      id="file-upload"
+                      accept=".csv,.txt"
+                      onChange={handleFileChange}
+                      required
+                      style={{ display: "none" }}
+                    />
+                  </Button>
+                  <span style={{ fontSize: '0.875rem', color: '#666' }}>
+                    {file ? file.name : "Nenhum arquivo selecionado"}
+                  </span>
+                </Box>
               </FormControl>
 
-              <FormLabel id="demo-row-radio-buttons-group-label">
+              <FormLabel id="k-final-radio-group">
                 Escolha a quantidade de perfis extremos (k final)
               </FormLabel>
               <RadioGroup
                 row
-                aria-labelledby="demo-row-radio-buttons-group-label"
-                name="row-radio-buttons-group"
+                aria-labelledby="k-final-radio-group"
+                name="k-final-radio-group"
                 value={kFinal}
                 onChange={(e) => setKFinal(Number(e.target.value))}
               >
-                <FormControlLabel value="2" control={<Radio />} label="2" />
-                <FormControlLabel value="3" control={<Radio />} label="3" />
-                <FormControlLabel value="4" control={<Radio />} label="4" />
+                <FormControlLabel value={2} control={<Radio />} label="2" />
+                <FormControlLabel value={3} control={<Radio />} label="3" />
+                <FormControlLabel value={4} control={<Radio />} label="4" />
               </RadioGroup>
 
               {/* Campo case_id */}
@@ -148,6 +176,7 @@ export default function GomForm() {
                         onChange={(e) => handleChangeVar(index, e.target.value)}
                         fullWidth
                         size="small"
+                        placeholder={`Variável ${index + 1}`}
                       />
                       {index === internalVars.length - 1 && (
                         <Button
@@ -173,13 +202,15 @@ export default function GomForm() {
                 color="primary"
                 fullWidth
                 sx={{ mt: 2 }}
+                disabled={isSubmitting}
               >
-                Enviar
+                {isSubmitting ? "Enviando..." : "Enviar"}
               </Button>
             </Stack>
           </form>
         </Box>
-        {/* dashboard */}
+        
+        {/* Dashboard */}
         {showDashboard && <Dashboard />}
       </div>
     </>

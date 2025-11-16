@@ -6,7 +6,6 @@ interface SunburstChartProps {
   num_k: number;
 }
 
-// ✅ Função para normalizar e somar valores ao longo da árvore
 const normalizeTreeValues = (nodes: any[]): any[] => {
   return nodes.map((node) => {
     if (node.children && node.children.length > 0) {

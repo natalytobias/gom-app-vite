@@ -20,12 +20,15 @@ export class GomService {
       if (dados.internal_vars?.length) {
         dados.internal_vars.forEach(v => formData.append("internal_vars", v));
       }
-
+      
       api.post("http://127.0.0.1:8000/upload-data/", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
+
+      console.log("aqui");
+
       
     } catch (err: any) {
       console.error("Erro ao enviar:", err.response?.data || err.message);
