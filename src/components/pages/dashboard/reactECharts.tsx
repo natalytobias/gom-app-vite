@@ -6,7 +6,7 @@ import type { CSSProperties } from 'react';
 import { CanvasRenderer } from 'echarts/renderers';
 
 // ✅ Agora importamos o Sunburst
-import { HeatmapChart, SunburstChart } from 'echarts/charts';
+import { HeatmapChart, SunburstChart, } from 'echarts/charts';
 
 // ✅ Label handling + animações do Sunburst
 import { LabelLayout, UniversalTransition } from 'echarts/features';
