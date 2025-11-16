@@ -6,7 +6,7 @@ interface SunburstChartProps {
   num_k: number;
 }
 
-// ✅ Função para normalizar e somar valores ao longo da árvore
+
 const normalizeTreeValues = (nodes: any[]): any[] => {
   return nodes.map((node) => {
     if (node.children && node.children.length > 0) {
@@ -34,7 +34,6 @@ const SunburstChart: React.FC<SunburstChartProps> = ({ num_k }) => {
     const loadSunburst = async () => {
       try {
         const response = await DashboardService.sunburst(num_k);
-        console.log("Sunburst API Response:", response);
 
         const fixedData = normalizeTreeValues(response);
         setChartData(fixedData);
@@ -97,10 +96,10 @@ const SunburstChart: React.FC<SunburstChartProps> = ({ num_k }) => {
 
         // ✅ Paleta suave por cluster K
         color: [
-          "#4B9CD3", // K1
-          "#66C18C", // K2
-          "#F6C85F", // K3
-          "#E08DAC", // K4
+          "#4bcad3ff", // K1
+          "#4ea572ff", // K2
+          "#c7992fff", // K3
+          "#e65050ff", // K4
         ],
       },
     ],

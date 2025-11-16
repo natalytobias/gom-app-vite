@@ -2,6 +2,7 @@ import React from 'react';
 import HeatmapChart from './heatmapChart';
 import SunburstChart from './Sunburst';
 import Menu from '../menu';
+import TabelaResultados from '../../tabelaResultados';
 
 
 const Dashboard: React.FC = () => {
@@ -51,8 +52,8 @@ const Dashboard: React.FC = () => {
             borderRadius: '8px', 
             boxShadow: '0 4px 12px rgba(0,0,0,0.05)' 
         }}>
-          <h2 style={{ color: '#333' }}>KPIs Principais (Futuro)</h2>
-          <p style={{ color: '#666' }}>Pode ser usado para métricas de resumo, como média e desvio padrão.</p>
+          <h2 style={{ color: '#333' }}>Tabela de LFMR</h2>
+          <TabelaResultados/>
           
         </div>
       </section>
