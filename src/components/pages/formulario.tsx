@@ -16,11 +16,15 @@ import FileUploadIcon from "@mui/icons-material/FileUpload";
 import AddIcon from "@mui/icons-material/Add";
 import Menu from "./menu";
 
+import Dashboard from "./dashboard/dashboard";
+
 export default function GomForm() {
   const [file, setFile] = useState<File | null>(null);
   const [kFinal, setKFinal] = useState<number>(0);
   const [caseId, setCaseId] = useState<string>("");
   const [internalVars, setInternalVars] = useState<string[]>([""]);
+
+  const [showDashboard, setShowDashboard] = useState(false);
 
   const handleChangeVar = (index: number, value: string) => {
     const newVars = [...internalVars];
@@ -54,6 +58,7 @@ export default function GomForm() {
       await GomService.convertendoTxt(kFinal, filteredVars);
 
       alert("Dados enviados com sucesso!");
+      setShowDashboard(true);
     } catch (err) {
       console.error("Erro ao enviar:", err);
       alert("Erro ao enviar dados!");
@@ -64,7 +69,7 @@ export default function GomForm() {
     <>
       <Menu />
 
-      <div className="pt-15">
+      <div className="pt-15 max-w-200">
         <Box
           sx={{
             maxWidth: "400px",
@@ -174,6 +179,8 @@ export default function GomForm() {
             </Stack>
           </form>
         </Box>
+        {/* dashboard */}
+        {showDashboard && <Dashboard />}
       </div>
     </>
   );

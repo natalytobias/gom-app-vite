@@ -24,7 +24,7 @@ export default function Home() {
           </div>
 
           <div className="text-start flex items-center gap-2 mt-2">
-            <Button variant="contained">
+            <Button variant="contained" href="/formulario">
               Comece a usar
               <ArrowRightCircleIcon size={15} className="ml-2" />
             </Button>
@@ -111,7 +111,11 @@ export default function Home() {
           </div>
 
           <div className="text-start flex  items-center gap-2 mt-2">
-            <Button variant="contained" className="items-center">
+            <Button
+              variant="contained"
+              className="items-center"
+              href="/documentacao"
+            >
               Leia a documentação
               <NotebookPenIcon size={15} className="ml-2" />
             </Button>
