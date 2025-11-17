@@ -19,8 +19,7 @@ export default function Home() {
         <div>
           <div className="text-start font-medium text-2xl pb-2">GOMON WEB</div>
           <div className="text-start">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-            elementum aliquam orci, ac interdum lectus consequat sed.
+            O GoMON é uma ferramenta online que permite a utilização do método Grade of Membership
           </div>
 
           <div className="text-start flex items-center gap-2 mt-2">
@@ -39,14 +38,9 @@ export default function Home() {
               Por que usar o GOMON?
             </div>
             <div className=" text-justify">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-              elementum aliquam orci, ac interdum lectus consequat sed. Aliquam
-              vulputate, lectus vitae posuere hendrerit, arcu mauris efficitur
-              nulla, at sodales mi ante blandit dolor. Quisque egestas egestas
-              massa et faucibus. Lorem ipsum dolor sit amet, consectetur
-              adipiscing elit. Integer elementum aliquam orci, ac interdum
-              lectus consequat sed. Aliquam vulputate, lectus vitae posuere
-              hendrerit,
+              Ele oferece uma abordagem mais realista e nuanceada para análise de populações complexas, 
+              permitindo que indivíduos pertençam a múltiplos grupos simultaneamente através de graus de pertinência. 
+              
             </div>
           </div>
           <div className="  flex-1">
@@ -63,23 +57,15 @@ export default function Home() {
             </div>
             {/* cards */}
             <div className=" text-justify pb-4">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-              elementum aliquam orci, ac interdum lectus consequat sed. Aliquam
-              vulputate, lectus vitae posuere hendrerit, arcu mauris efficitur
-              nulla, at sodales mi ante blandit dolor. Quisque egestas egestas
-              massa et faucibus. Lorem ipsum dolor sit amet, consectetur
-              adipiscing elit. Integer elementum aliquam orci, ac interdum
-              lectus consequat sed. Aliquam vulputate, lectus vitae posuere
-              hendrerit,
+              Diferente de métodos tradicionais que forçam categorizações rígidas, o GoM reconhece que na saúde, ciências sociais e comportamento humano, as pessoas frequentemente exibem características de vários perfis ao mesmo tempo. Esta flexibilidade captura melhor a heterogeneidade natural dos dados, fornece medidas de incerteza mais informativas e identifica perfis latentes que emergem organicamente da estrutura dos dados, resultando em análises mais precisas e intervenções mais direcionadas.
             </div>
             <div className="grid grid-cols-2 gap-5">
               <Card
-                title="Card 01"
-                subtitle="Card 01 -  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-              elementum aliquam orci, ac interdum lectus consequat sed."
+                title="Perfis Latentes"
+                subtitle="Descobre padrões não óbvios nos dados. Não depende de categorizações pré-definidas pelo pesquisador. Perfis emergem organicamente da estrutura dos dados"
               />
               <Card
-                title="Card 02"
+                title="Complexidade Humana"
                 subtitle="Card 02 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
               elementum aliquam orci, ac interdum lectus consequat sed."
               />
@@ -102,11 +88,10 @@ export default function Home() {
         <div className="flex flex-row justify-between w-full gap-8 ">
           <div className="max-w-100">
             <div className="text-start font-medium text-2xl pb-2">
-              LOREM IPSUM
+              PADRONIZAÇÃO
             </div>
             <div className="text-start">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-              elementum aliquam orci, ac interdum lectus consequat sed.
+              É importante que os dados da sua amostragem estejam dentro dos padrões do GoM. Caso não saiba ou não tenha certeza leia nossa documentação.
             </div>
           </div>
 
