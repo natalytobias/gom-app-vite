@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import Menu from "./menu";
 import { Github } from "lucide-react";
-import Separator from "../separator";
+import Separator from "../componentes/separator";
 
 export default function Sobre() {
   return (

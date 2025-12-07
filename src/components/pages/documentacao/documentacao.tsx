@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import Menu from "../menu";
-import Separator from "../../separator";
+import Separator from "../../componentes/separator";
 import variaveis_exemplo1 from "../../imgs/variaveis_exemplo1.jpg";
 import variaveis_exemplo2 from "../../imgs/variaveis_exemplo2.jpg";
 

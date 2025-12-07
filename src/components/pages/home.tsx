@@ -7,9 +7,9 @@ import {
   StickyNote,
   NotebookPenIcon,
 } from "lucide-react";
-import Separator from "../separator";
+import Separator from "../componentes/separator";
 import estatiticas from "../imgs/estatisticas.jpg";
-import { Card } from "../card";
+import { Card } from "../componentes/card";
 
 export default function Home() {
   return (
