@@ -5,10 +5,13 @@ import type { CSSProperties } from 'react';
 
 import { CanvasRenderer } from 'echarts/renderers';
 
-// ✅ Agora importamos o Sunburst
-import { HeatmapChart, SunburstChart } from 'echarts/charts';
+import { 
+  HeatmapChart, 
+  SunburstChart,
+  ScatterChart  
+} from 'echarts/charts';
 
-// ✅ Label handling + animações do Sunburst
+
 import { LabelLayout, UniversalTransition } from 'echarts/features';
 
 import { 
@@ -19,18 +22,19 @@ import {
   LegendComponent
 } from 'echarts/components';
 
-// ✅ Registrar todos os componentes
+
 echarts.use([
   CanvasRenderer,
   HeatmapChart,
-  SunburstChart, // <--- AQUI!
+  SunburstChart,
+  ScatterChart,      
   GridComponent,
   VisualMapComponent,
   TooltipComponent,
   TitleComponent,
   LegendComponent,
-  LabelLayout, // <--- AQUI!
-  UniversalTransition // <--- AQUI!
+  LabelLayout,
+  UniversalTransition
 ]);
 
 interface ReactEChartsProps {

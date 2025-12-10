@@ -3,7 +3,7 @@ import api from '../config/axiosConfig.ts';
 
 
 export class DashboardService{
-    static async sunburst(num_k: number){
+  static async sunburst(num_k: number){
 
         try{
             const response = await api.get(`http://127.0.0.1:8000/sunburst-map`, {
@@ -15,9 +15,23 @@ export class DashboardService{
             console.error("Erro ao carregar dados", err.response?.data || err.message);
             throw err;
          }
-    }
+  }
 
-    static async  DadosHeatmap() {
+  static async matrixScatter(num_k: number){
+     try{
+            const response = await api.get(`http://127.0.0.1:8000/correlation-matrix`, {
+                params: { num_k }
+            });
+            return response.data;
+        }
+         catch(err: any){
+            console.error("Erro ao carregar dados", err.response?.data || err.message);
+            throw err;
+         }
+  }
+
+
+  static async  DadosHeatmap() {
     try{
       const heatmapData = await api.get("http://127.0.0.1:8000/dados-heatmap");
       console.log(heatmapData);

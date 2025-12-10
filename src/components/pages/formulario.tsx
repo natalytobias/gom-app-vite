@@ -94,13 +94,16 @@ export default function GomForm() {
           paddingTop: "80px",
           minHeight: "100vh",
           backgroundColor: "#fafafa",
-          display: "flex",
-          justifyContent: "center",
         }}
       >
-        <Box sx={{ maxWidth: "600px", width: "100%" }}>
-          {/* Card do Formulário */}
-          <Card elevation={1} sx={{ borderRadius: 2, mb: 4 }}>
+        {/* Container do Formulário - Centralizado com max-width */}
+        <Box sx={{ 
+          maxWidth: "600px", 
+          width: "100%",
+          margin: "0 auto",
+          mb: showDashboard ? 4 : 0
+        }}>
+          <Card elevation={1} sx={{ borderRadius: 2 }}>
             <CardContent sx={{ p: 4 }}>
               <Typography variant="h5" component="h1" gutterBottom align="center">
                 Análise GOM
@@ -224,14 +227,14 @@ export default function GomForm() {
               </form>
             </CardContent>
           </Card>
-
-          {/* Dashboard */}
-          {showDashboard && (
-            <Box sx={{ marginTop: 3 }}>
-              <Dashboard perfil_k={kFinal} />
-            </Box>
-          )}
         </Box>
+
+        {/* Dashboard - Largura total da página */}
+        {showDashboard && (
+          <Box sx={{ width: "100%" }}>
+            <Dashboard perfil_k={kFinal} />
+          </Box>
+        )}
       </Box>
     </>
   );
